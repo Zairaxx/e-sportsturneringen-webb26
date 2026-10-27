@@ -1,0 +1,506 @@
+/* ============ Typsnitt ============ */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap");
+
+/* ============ Grundinställningar ============ */
+:root {
+  --bg: #07070f;
+  --surface: #10101f;
+  --surface-2: #181830;
+  --line: #2a2a4a;
+  --text: #eef0ff;
+  --muted: #8b8fb8;
+  --team-a: #ff2e63;      /* neonrosa */
+  --team-b: #08d9d6;      /* neoncyan */
+  --accent: #f9f871;      /* neongul */
+  --danger: #ff4d4d;
+  --cut: 14px;            /* storlek på de avskurna hörnen */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Rajdhani", system-ui, sans-serif;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.4;
+  min-height: 100vh;
+  padding: 2.5rem 1rem 4rem;
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(255, 46, 99, 0.18), transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(8, 217, 214, 0.15), transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 40px 40px,
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* Scanlines över hela sidan – som en gammal arkadskärm */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  z-index: 10;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ============ Header ============ */
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: "Orbitron", sans-serif;
+  color: var(--bg);
+  background: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.9rem;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+h1 {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: 1.05;
+  margin: 0.8rem 0 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-shadow:
+    -3px 0 var(--team-a),
+    3px 0 var(--team-b),
+    0 0 30px rgba(255, 255, 255, 0.25);
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ============ Kontrollpanel ============ */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.25rem;
+  background: var(--surface);
+  padding: 1.4rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--line);
+  clip-path: polygon(
+    var(--cut) 0, 100% 0,
+    100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%,
+    0 100%, 0 var(--cut)
+  );
+}
+
+.team-picker {
+  border: none;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.team-picker legend,
+.rename label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Radioknappar som lagval i en spelmeny */
+.radio input {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio span {
+  display: inline-block;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.2rem;
+  background: var(--surface-2);
+  color: var(--muted);
+  border: 2px solid var(--line);
+  cursor: pointer;
+  transform: skewX(-10deg);
+  transition: all 0.15s;
+}
+
+.radio span:hover {
+  color: var(--text);
+}
+
+.radio:nth-of-type(1) input:checked + span {
+  color: #fff;
+  border-color: var(--team-a);
+  background: rgba(255, 46, 99, 0.15);
+  box-shadow: 0 0 16px rgba(255, 46, 99, 0.6), inset 0 0 12px rgba(255, 46, 99, 0.3);
+}
+
+.radio:nth-of-type(2) input:checked + span {
+  color: #fff;
+  border-color: var(--team-b);
+  background: rgba(8, 217, 214, 0.12);
+  box-shadow: 0 0 16px rgba(8, 217, 214, 0.6), inset 0 0 12px rgba(8, 217, 214, 0.3);
+}
+
+.radio input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.rename {
+  flex: 1;
+  min-width: 260px;
+}
+
+.rename-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid var(--line);
+  background: var(--bg);
+  color: var(--accent);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  caret-color: var(--accent);
+}
+
+input[type="text"]::placeholder {
+  color: #4d5078;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(249, 248, 113, 0.35);
+}
+
+/* ============ Knappar ============ */
+.btn {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  padding: 0.85rem 1.3rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.1s, box-shadow 0.15s, filter 0.15s;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.btn:hover {
+  filter: brightness(1.15);
+}
+
+.btn:active {
+  transform: translateY(2px);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 20px rgba(249, 248, 113, 0.5);
+  animation: ready 2s ease-in-out infinite;
+}
+
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--text);
+  outline: 1px solid var(--line);
+  outline-offset: -1px;
+}
+
+.btn-small {
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.change-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(249, 248, 113, 0.4);
+}
+
+.leave-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  box-shadow: 0 0 8px rgba(255, 77, 77, 0.5);
+}
+
+/* ============ Meddelanden ============ */
+.message {
+  min-height: 1.6rem;
+  margin-bottom: 1rem;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--danger);
+  text-shadow: 0 0 10px rgba(255, 77, 77, 0.7);
+  text-align: center;
+}
+
+.message:not(:empty) {
+  animation: glitch 0.4s steps(2) 2;
+}
+
+/* ============ Lagen ============ */
+.teams {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.team-a { --team-color: var(--team-a); --team-glow: rgba(255, 46, 99, 0.35); }
+.team-b { --team-color: var(--team-b); --team-glow: rgba(8, 217, 214, 0.35); }
+
+.team {
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--team-glow), transparent 45%),
+    var(--surface);
+  padding: 1.4rem;
+  border: 2px solid var(--team-color);
+  box-shadow: 0 0 25px var(--team-glow), inset 0 0 25px var(--team-glow);
+  clip-path: polygon(
+    var(--cut) 0, 100% 0,
+    100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%,
+    0 100%, 0 var(--cut)
+  );
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--line);
+}
+
+.team-header h2 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--team-color);
+  text-shadow: 0 0 12px var(--team-color);
+  overflow-wrap: anywhere;
+}
+
+.count {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 0.25rem 0.6rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Lägg till klassen "full" på .team när laget har fem spelare */
+.team.full .count {
+  color: var(--danger);
+  border-color: var(--danger);
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
+}
+
+.team.full .count::after {
+  content: " FULL";
+}
+
+.versus {
+  align-self: center;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 2.2rem;
+  font-style: italic;
+  color: var(--accent);
+  text-shadow:
+    -2px 0 var(--team-a),
+    2px 0 var(--team-b),
+    0 0 20px rgba(249, 248, 113, 0.8);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+/* ============ Spelarlista ============ */
+.player-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 3rem;
+  counter-reset: slot;
+}
+
+/* Visas när listan är tom */
+.player-list:empty::before {
+  content: "Väntar på spelare…";
+  display: block;
+  padding: 0.9rem;
+  text-align: center;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  animation: blink 1.4s steps(2) infinite;
+}
+
+.player {
+  counter-increment: slot;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--surface-2);
+  padding: 0.6rem 0.75rem;
+  border-left: 4px solid var(--team-color);
+  animation: spawn 0.35s ease-out;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.player:hover {
+  transform: translateX(4px);
+  background: #20203d;
+}
+
+/* Platsnummer framför spelaren: 01, 02, 03 … */
+.player::before {
+  content: "0" counter(slot);
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--team-color);
+  opacity: 0.8;
+}
+
+.player-name {
+  flex: 1;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  overflow-wrap: break-word;
+}
+
+.player-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+@keyframes spawn {
+  0%   { opacity: 0; transform: translateX(-12px); filter: brightness(2.5); }
+  60%  { opacity: 1; filter: brightness(1.6); }
+  100% { transform: none; filter: none; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+
+@keyframes ready {
+  0%, 100% { box-shadow: 0 0 14px rgba(249, 248, 113, 0.4); }
+  50%      { box-shadow: 0 0 28px rgba(249, 248, 113, 0.8); }
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
+}
+
+@keyframes glitch {
+  0%   { transform: translateX(-3px); }
+  50%  { transform: translateX(3px); }
+  100% { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .teams {
+    grid-template-columns: 1fr;
+  }
+
+  .rename-row {
+    flex-direction: column;
+  }
+
+  .versus {
+    justify-self: center;
+  }
+
+  .controls > .btn-primary {
+    width: 100%;
+  }
+
+  .player {
+    flex-wrap: wrap;
+  }
+}

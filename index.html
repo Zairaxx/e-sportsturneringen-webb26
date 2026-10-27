@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-sportsturneringen</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <p class="eyebrow">Nackademin Open 2026</p>
+    <h1>E-sportsturneringen</h1>
+    <p class="lead">Välj ett lag och bjud in spelare – max fem per lag.</p>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Hantera lag">
+      <fieldset class="team-picker">
+        <legend>Välj lag</legend>
+        <label class="radio">
+          <input type="radio" name="team" value="A" checked>
+          <span>Lag A</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="team" value="B">
+          <span>Lag B</span>
+        </label>
+      </fieldset>
+
+      <div class="rename">
+        <label for="team-name-input">Nytt lagnamn</label>
+        <div class="rename-row">
+          <input type="text" id="team-name-input" placeholder="T.ex. Pixel Pirates">
+          <button type="button" id="change-name-btn" class="btn btn-secondary">Change Team name</button>
+        </div>
+      </div>
+
+      <button type="button" id="add-player-btn" class="btn btn-primary">+ Add player</button>
+    </section>
+
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+
+    <section class="teams">
+      <article class="team team-a">
+        <div class="team-header">
+          <h2 id="team-name-A">Lag A</h2>
+          <span class="count"><span id="count-A">0</span>/5</span>
+        </div>
+        <!--
+            För att få rätt styling: Så här ska en spelare se ut när ni skapar den med JavaScript:
+
+            <li class="player">
+              <span class="player-name">bluefox123</span>
+              <div class="player-actions">
+                <button class="btn-small change-btn">Change Team</button>
+                <button class="btn-small leave-btn">Leave Team</button>
+              </div>
+            </li>
+            
+          -->
+        <ul id="team-A" class="player-list"></ul>
+      </article>
+
+      <div class="versus" aria-hidden="true">VS</div>
+
+      <article class="team team-b">
+        <div class="team-header">
+          <h2 id="team-name-B">Lag B</h2>
+          <span class="count"><span id="count-B">0</span>/5</span>
+        </div>
+        <ul id="team-B" class="player-list"></ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
